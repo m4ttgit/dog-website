@@ -1,0 +1,4 @@
+business_name,address,rating,reviews,price,phone,website,user_review,serpapi_thumbnail
+Atlas Coffeehouse,6 Duke's Rd Singapore 268886,4.3,1234,$,+65 6314 2674,http://atlascoffeehouse.com.sg,"Great coffee and dog-friendly outdoor seating!",/images/default-cafe.jpg
+Five Oars Coffee Roasters,39 Tanjong Pagar Road Singapore 088462,4.4,2345,$$,+65 6877 4885,http://fiveoarscoffeeroasters.com,"Lovely atmosphere and welcoming to pets",/images/default-cafe.jpg
+Merci Marcel,56 Eng Hoon St Singapore 169776,4.5,3456,$$$,+65 6224 0113,http://mercimarcel.com,"Beautiful space with excellent food and dog-friendly policy",/images/default-cafe.jpg

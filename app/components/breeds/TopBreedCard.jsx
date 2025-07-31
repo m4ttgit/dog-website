@@ -1,0 +1,159 @@
+'use client';
+import { useState } from 'react';
+
+const formatNumber = (value) => {
+  return value ? value.toFixed(2) : null;
+};
+
+export default function TopBreedCard({ breed }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const getBreedPhotoUrl = (breedName) => {
+    const breedPhotos = {
+      'Labrador Retriever': '/images/breeds/ryan-phillips-PIDjFNVOxY0-unsplash_labrador_retriever.jpg',
+      'French Bulldog': '/images/breeds/karsten-winegeart-oU6KZTXhuvk-unsplash_french_bulldog.jpg',
+      'Golden Retriever': '/images/breeds/justin-aikin-KFJuCzJiQYU-unsplash_golden_retriver.jpg',
+      'German Shepherd Dog': '/images/breeds/sofia-guaico-xqqjZznrar0-unsplash_german_shepard.jpg',
+      'Poodle (Standard)': '/images/breeds/fredrik-ohlander-tGBRQw52Thw-unsplash_poodle.jpg',
+      'Poodle (Toy)': '/images/breeds/alison-pang-c2XO2lTnE7A-unsplash_poodle_toy.jpg',
+      'Poodle (Miniature)': '/images/breeds/jarad-lee-sxn9LiahfMM-unsplash_poodle_miniature.jpg',
+      'Bulldog': '/images/breeds/kabo-7vJRRntoQwg-unsplash_bulldog.jpg',
+      'Rottweiler': '/images/breeds/kevin-seibel-s3fnidf3VVs-unsplash_rottweiler.jpg',
+      'Beagle': '/images/breeds/evy-prentice--xFcBvbwLAU-unsplash_beagle.jpg'
+    };
+    
+    return breedPhotos[breedName] || '/placeholder-dog.jpg';
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalClick = (e) => {
+    e.stopPropagation();
+  };
+
+  return (
+    <>
+      <div 
+        className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow"
+        onClick={() => setIsModalOpen(true)}
+      >
+        <div>
+          <img
+            src={getBreedPhotoUrl(breed.name)}
+            alt={breed.name}
+            className="w-full h-48 object-cover"
+          />
+        </div>
+        <div className="p-4">
+          <h3 className="text-lg font-bold mb-2">{breed.name}</h3>
+          <p className="text-sm text-gray-600 line-clamp-3">
+            {breed.temperament || `The ${breed.name} is a wonderful companion.`}
+          </p>
+        </div>
+      </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+          onClick={handleCloseModal}
+        >
+          <div 
+            className="relative bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={handleModalClick}
+          >
+            {/* Close button */}
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 z-10"
+              onClick={handleCloseModal}
+              type="button"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Modal content */}
+            <div className="divide-y divide-gray-200">
+              {/* Image section */}
+              <div className="relative h-64 sm:h-80">
+                <img
+                  src={getBreedPhotoUrl(breed.name)}
+                  alt={breed.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Content section */}
+              <div className="p-6 space-y-6">
+                <div>
+                  <h2 className="text-2xl font-bold mb-4">{breed.name}</h2>
+                  <p className="text-gray-600">
+                    {breed.temperament || `The ${breed.name} is a wonderful companion.`}
+                  </p>
+                </div>
+
+                {breed.description && (
+                  <div>
+                    <h3 className="font-semibold text-lg mb-2">Description</h3>
+                    <p className="text-gray-600">{breed.description}</p>
+                  </div>
+                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {breed.group && (
+                    <div>
+                      <h3 className="font-semibold mb-1">Group</h3>
+                      <p className="text-gray-600">{breed.group}</p>
+                    </div>
+                  )}
+
+                  {(breed.min_height || breed.max_height) && (
+                    <div>
+                      <h3 className="font-semibold mb-1">Height</h3>
+                      <p className="text-gray-600">
+                        {breed.min_height && breed.max_height
+                          ? `${formatNumber(breed.min_height)} - ${formatNumber(breed.max_height)} cm`
+                          : breed.min_height
+                          ? `${formatNumber(breed.min_height)} cm`
+                          : `${formatNumber(breed.max_height)} cm`}
+                      </p>
+                    </div>
+                  )}
+
+                  {(breed.min_weight || breed.max_weight) && (
+                    <div>
+                      <h3 className="font-semibold mb-1">Weight</h3>
+                      <p className="text-gray-600">
+                        {breed.min_weight && breed.max_weight
+                          ? `${formatNumber(breed.min_weight)} - ${formatNumber(breed.max_weight)} kg`
+                          : breed.min_weight
+                          ? `${formatNumber(breed.min_weight)} kg`
+                          : `${formatNumber(breed.max_weight)} kg`}
+                      </p>
+                    </div>
+                  )}
+
+                  {(breed.min_expectancy || breed.max_expectancy) && (
+                    <div>
+                      <h3 className="font-semibold mb-1">Life Expectancy</h3>
+                      <p className="text-gray-600">
+                        {breed.min_expectancy && breed.max_expectancy
+                          ? `${breed.min_expectancy} - ${breed.max_expectancy} years`
+                          : breed.min_expectancy
+                          ? `${breed.min_expectancy} years`
+                          : `${breed.max_expectancy} years`}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}

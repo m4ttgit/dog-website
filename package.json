@@ -2,26 +2,43 @@
   "name": "dog-website",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "import-breeds": "node scripts/importBreeds.js"
   },
   "dependencies": {
+    "@babel/runtime": "^7.27.1",
+    "@react-google-maps/api": "^2.20.5",
+    "@supabase/supabase-js": "^2.48.1",
+    "axios": "^1.7.9",
+    "csv-parse": "^5.6.0",
+    "csv-parser": "^3.1.0",
+    "dotenv": "^16.6.1",
+    "next": "^15.1.6",
+    "papaparse": "^5.5.2",
+    "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.5"
+    "react-icons": "^5.5.0",
+    "rss-parser": "^3.13.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "^15.3.1",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "postcss": "^8",
+    "@types/react": "19.0.8",
+    "@types/tailwindcss": "^3.0.11",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.25.1",
+    "eslint-config-next": "^15.3.1",
+    "postcss": "^8.4.35",
+    "postcss-import": "^16.0.0",
+    "postcss-nesting": "^12.0.2",
     "tailwindcss": "^3.4.1",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.5",
-    "@eslint/eslintrc": "^3"
+    "typescript": "5.7.3"
   }
 }

@@ -1,24 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dog Website
+
+A comprehensive platform for dog lovers featuring breed information, adoption listings, news, quizzes, and a dog cafe finder.
+
+## Features
+
+- **Breed Directory**: Explore various dog breeds and their characteristics
+- **Adoption Center**: Find dogs available for adoption
+- **News Section**: Stay updated with the latest dog-related news
+- **Interactive Quiz**: Test your knowledge about dog breeds
+- **Dog Cafe Finder**: Locate dog-friendly cafes near you using Google Maps integration
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 16.8 or later
+- A Google Maps API key with Places API enabled
+
+### Setup
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Create a `.env.local` file in the root directory and add your Google Maps API key:
+
+```env
+NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
+```
+
+4. Get a Google Maps API key:
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/)
+   - Create a new project or select an existing one
+   - Enable the Maps JavaScript API and Places API
+   - Create credentials (API key)
+   - Copy the API key to your `.env.local` file
+
+5. Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project requires the following environment variables:
+
+- `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY`: Your Google Maps API key for the cafe finder feature
+
+Make sure these are properly set in your `.env.local` file before starting the application.
 
 ## Learn More
 
