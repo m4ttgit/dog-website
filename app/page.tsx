@@ -57,21 +57,21 @@ export default function Home() {
               <div className="text-4xl mb-4">🐾</div>
               <h3 className="text-xl font-bold mb-3 text-primary">Nose Print Identity</h3>
               <p className="text-text/70">
-                Just like human fingerprints, every dog's nose print is unique! Some countries even accept them as a form of identification.
+                Just like human fingerprints, every dog&apos;s nose print is unique! Some countries even accept them as a form of identification.
               </p>
             </div>
             <div className="card text-center">
               <div className="text-4xl mb-4">📨</div>
               <h3 className="text-xl font-bold mb-3 text-primary">Tail Talk</h3>
               <p className="text-text/70">
-                A wagging tail isn't always a sign of happiness. The direction and height of the wag can reveal a lot about a dog's mood.
+                A wagging tail isn&apos;t always a sign of happiness. The direction and height of the wag can reveal a lot about a dog&apos;s mood.
               </p>
             </div>
             <div className="card text-center">
               <div className="text-4xl mb-4">👃</div>
               <h3 className="text-xl font-bold mb-3 text-primary">Super Sniffers</h3>
               <p className="text-text/70">
-                A dog's sense of smell is up to 100,000 times more powerful than a human's. They can even smell emotions like fear.
+                A dog&apos;s sense of smell is up to 100,000 times more powerful than a human&apos;s. They can even smell emotions like fear.
               </p>
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function Home() {
                 Learning about different dog breeds helps you understand their unique needs, temperaments, and health concerns. This knowledge empowers you to provide the best possible care for your furry friend.
               </p>
               <p className="text-lg text-text/70 leading-relaxed">
-                Whether you're a seasoned dog owner or considering getting a new puppy, our resources will guide you on your journey to becoming a more informed and responsible pet parent.
+                Whether you&apos;re a seasoned dog owner or considering getting a new puppy, our resources will guide you on your journey to becoming a more informed and responsible pet parent.
               </p>
             </div>
           </div>
