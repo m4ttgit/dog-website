@@ -18,8 +18,20 @@ function BreedPageClient({ breed, slug }) {
       try {
         // First try to load from our local mapping
         const breedMapping = await fetch('/breed-images.json').then(res => res.json());
+        
+        // Try exact match first
         if (breedMapping[breed.breed]) {
           setImageUrl(breedMapping[breed.breed]);
+          setIsLoading(false);
+          return;
+        }
+        
+        // Try case-insensitive match
+        const exactMatch = Object.keys(breedMapping).find(key => 
+          key.toLowerCase() === breed.breed.toLowerCase()
+        );
+        if (exactMatch) {
+          setImageUrl(breedMapping[exactMatch]);
           setIsLoading(false);
           return;
         }
