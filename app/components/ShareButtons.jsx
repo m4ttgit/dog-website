@@ -20,6 +20,7 @@ import { buildShareUrl, copyToClipboard, buildCanonicalUrl } from '../lib/share'
  * Styling: TailwindCSS utility classes consistent with existing project
  */
 
+export function ShareButtons({
 export default function ShareButtons({
   path,
   url,

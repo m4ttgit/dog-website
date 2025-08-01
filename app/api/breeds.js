@@ -81,6 +81,24 @@ function generateDescription(breed) {
     breed.min_expectancy}-${breed.max_expectancy} years.`;
 }
 
+function createSlug(breedName) {
+  return breedName
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .trim();
+}
+
+export async function getBreedBySlug(slug) {
+  try {
+    const breeds = await getBreeds();
+    return breeds.find(breed => createSlug(breed.breed) === slug);
+  } catch (error) {
+    console.error('Error getting breed by slug:', error);
+    return null;
+  }
+}
+
 export async function getBreeds() {
   try {
     console.log('Fetching breeds from Supabase...');
