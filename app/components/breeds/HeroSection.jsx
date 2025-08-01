@@ -7,7 +7,7 @@ export default function HeroSection({ onStartQuiz }) {
         Find Your Perfect Dog Breed
       </h1>
       <div className="max-w-2xl">
-        <p className="text-lg md:text-xl opacity-90 mb-8">
+        <p className="text-lg md:text-xl mb-8">
           Explore our comprehensive guide to find the ideal companion for your lifestyle.
         </p>
         <button
