@@ -15,12 +15,20 @@ function BreedPageClient({ breed, slug }) {
   useEffect(() => {
     const fetchBreedImage = async () => {
       setIsLoading(true);
+      
+      // Set timeout to prevent infinite loading
+      const timeout = setTimeout(() => {
+        setImageUrl('/placeholder-dog.jpg');
+        setIsLoading(false);
+      }, 5000);
+      
       try {
         // First try to load from our local mapping
         const breedMapping = await fetch('/breed-images.json').then(res => res.json());
         
         // Try exact match first
         if (breedMapping[breed.breed]) {
+          clearTimeout(timeout);
           setImageUrl(breedMapping[breed.breed]);
           setIsLoading(false);
           return;
@@ -31,6 +39,7 @@ function BreedPageClient({ breed, slug }) {
           key.toLowerCase() === breed.breed.toLowerCase()
         );
         if (exactMatch) {
+          clearTimeout(timeout);
           setImageUrl(breedMapping[exactMatch]);
           setIsLoading(false);
           return;
@@ -41,14 +50,15 @@ function BreedPageClient({ breed, slug }) {
         const response = await fetch(`https://dog.ceo/api/breed/${breedForApi}/images/random`);
         const data = await response.json();
         if (data.status === 'success') {
+          clearTimeout(timeout);
           setImageUrl(data.message);
         } else {
-          // Use placeholder image as final fallback
+          clearTimeout(timeout);
           setImageUrl('/placeholder-dog.jpg');
         }
       } catch (error) {
         console.error('Error fetching breed image:', error);
-        // Use placeholder image on error
+        clearTimeout(timeout);
         setImageUrl('/placeholder-dog.jpg');
       }
       setIsLoading(false);

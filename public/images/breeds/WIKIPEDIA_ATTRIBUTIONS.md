@@ -16,6 +16,7 @@ The following breed images were sourced from Wikimedia Commons under Creative Co
 10. **Peruvian Inca Orchid** - Source: https://commons.wikimedia.org/wiki/File:Peruvian_Hairless_Dog_1.jpg
 11. **Neapolitan Mastiff** - Source: https://commons.wikimedia.org/wiki/File:Mastino_sylwetka.jpg
 12. **Bolognese** - By Mrtibbs1999 - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=147144639
+13. **Black Russian Terrier** - Source: https://upload.wikimedia.org/wikipedia/commons/b/bd/Wystawa_Rybnik_02.10.2011_czarny_terier_rosyjski_2pl.jpg
 
 ## License Information
 
