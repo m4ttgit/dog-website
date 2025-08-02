@@ -60,66 +60,17 @@ function CharacteristicsBars({ energyValue, trainabilityValue }) {
 
 export default function BreedCard({ breed }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   
   // Ensure we have a display name
   const displayName = breed.breed || breed.name || 'Unknown Breed';
   
-  useEffect(() => {
-    const fetchBreedImage = async () => {
-      setIsLoading(true);
-      
-      // Set timeout to prevent infinite loading
-      const timeout = setTimeout(() => {
-        setImageUrl('/placeholder-dog.jpg');
-        setIsLoading(false);
-      }, 5000);
-      
-      try {
-        // First try to load from our local mapping
-        const breedMapping = await fetch('/breed-images.json').then(res => res.json());
-        
-        // Try exact match first
-        if (breedMapping[displayName]) {
-          clearTimeout(timeout);
-          setImageUrl(breedMapping[displayName]);
-          setIsLoading(false);
-          return;
-        }
-        
-        // Try case-insensitive match
-        const exactMatch = Object.keys(breedMapping).find(key => 
-          key.toLowerCase() === displayName.toLowerCase()
-        );
-        if (exactMatch) {
-          clearTimeout(timeout);
-          setImageUrl(breedMapping[exactMatch]);
-          setIsLoading(false);
-          return;
-        }
-
-        // Fall back to dog.ceo API
-        const breedForApi = formatBreedForApi(displayName);
-        const response = await fetch(`https://dog.ceo/api/breed/${breedForApi}/images/random`);
-        const data = await response.json();
-        if (data.status === 'success') {
-          clearTimeout(timeout);
-          setImageUrl(data.message);
-        } else {
-          clearTimeout(timeout);
-          setImageUrl('/placeholder-dog.jpg');
-        }
-      } catch (error) {
-        console.error('Error fetching breed image:', error);
-        clearTimeout(timeout);
-        setImageUrl('/placeholder-dog.jpg');
-      }
-      setIsLoading(false);
-    };
-
-    fetchBreedImage();
-  }, [displayName]);
+  // Simple image path construction
+  const getImagePath = (breedName) => {
+    const imageName = breedName.replace(/\s+/g, '_');
+    return `/images/breeds/${imageName}.jpg`;
+  };
+  
+  const imageUrl = getImagePath(displayName);
 
   // Calculate trait values
   const energyValue = parseFloat(breed.energy_level_value) || 0;
@@ -169,21 +120,14 @@ export default function BreedCard({ breed }) {
 
   const BreedImage = ({ className = "h-48" }) => (
     <div className={`w-full ${className} relative bg-gray-100 rounded-t-xl overflow-hidden`}>
-      {isLoading ? (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-4 border-primary border-t-transparent"></div>
-        </div>
-      ) : imageUrl ? (
-        <img
-          src={imageUrl}
-          alt={displayName}
-          className="w-full h-full object-contain bg-white"
-        />
-      ) : (
-        <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-          No image available
-        </div>
-      )}
+      <img
+        src={imageUrl}
+        alt={displayName}
+        className="w-full h-full object-contain bg-white"
+        onError={(e) => {
+          e.target.src = '/placeholder-dog.jpg';
+        }}
+      />
     </div>
   );
 

@@ -1,71 +1,16 @@
-'use client';
 import { getBreedBySlug } from "@/app/api/breeds";
 import Image from "next/image";
 import { ShareButtons } from "@/app/components/ShareButtons";
-import { useState, useEffect } from 'react';
-
-function formatBreedForApi(breedName) {
-  return breedName.toLowerCase().replace(/\s+/g, '');
-}
 
 function BreedPageClient({ breed, slug }) {
-  const [imageUrl, setImageUrl] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Simple image path construction
+  const getImagePath = (breedName) => {
+    // Try common image path patterns
+    const imageName = breedName.replace(/\s+/g, '_');
+    return `/images/breeds/${imageName}.jpg`;
+  };
   
-  useEffect(() => {
-    const fetchBreedImage = async () => {
-      setIsLoading(true);
-      
-      // Set timeout to prevent infinite loading
-      const timeout = setTimeout(() => {
-        setImageUrl('/placeholder-dog.jpg');
-        setIsLoading(false);
-      }, 5000);
-      
-      try {
-        // First try to load from our local mapping
-        const breedMapping = await fetch('/breed-images.json').then(res => res.json());
-        
-        // Try exact match first
-        if (breedMapping[breed.breed]) {
-          clearTimeout(timeout);
-          setImageUrl(breedMapping[breed.breed]);
-          setIsLoading(false);
-          return;
-        }
-        
-        // Try case-insensitive match
-        const exactMatch = Object.keys(breedMapping).find(key => 
-          key.toLowerCase() === breed.breed.toLowerCase()
-        );
-        if (exactMatch) {
-          clearTimeout(timeout);
-          setImageUrl(breedMapping[exactMatch]);
-          setIsLoading(false);
-          return;
-        }
-
-        // Fall back to dog.ceo API
-        const breedForApi = formatBreedForApi(breed.breed);
-        const response = await fetch(`https://dog.ceo/api/breed/${breedForApi}/images/random`);
-        const data = await response.json();
-        if (data.status === 'success') {
-          clearTimeout(timeout);
-          setImageUrl(data.message);
-        } else {
-          clearTimeout(timeout);
-          setImageUrl('/placeholder-dog.jpg');
-        }
-      } catch (error) {
-        console.error('Error fetching breed image:', error);
-        clearTimeout(timeout);
-        setImageUrl('/placeholder-dog.jpg');
-      }
-      setIsLoading(false);
-    };
-
-    fetchBreedImage();
-  }, [breed.breed]);
+  const imageUrl = getImagePath(breed.breed);
 
   return (
     <div className="container mx-auto py-6 px-4">
@@ -79,21 +24,14 @@ function BreedPageClient({ breed, slug }) {
         
         <div className="mb-6">
           <div className="w-full h-96 relative bg-gray-100 rounded-lg overflow-hidden">
-            {isLoading ? (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
-              </div>
-            ) : imageUrl ? (
-              <img
-                src={imageUrl}
-                alt={breed.breed}
-                className="w-full h-full object-contain bg-white"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-                No image available
-              </div>
-            )}
+            <img
+              src={imageUrl}
+              alt={breed.breed}
+              className="w-full h-full object-contain bg-white"
+              onError={(e) => {
+                e.target.src = '/placeholder-dog.jpg';
+              }}
+            />
           </div>
         </div>
         
