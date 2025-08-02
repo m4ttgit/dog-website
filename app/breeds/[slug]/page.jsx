@@ -42,9 +42,14 @@ function BreedPageClient({ breed, slug }) {
         const data = await response.json();
         if (data.status === 'success') {
           setImageUrl(data.message);
+        } else {
+          // Use placeholder image as final fallback
+          setImageUrl('/placeholder-dog.jpg');
         }
       } catch (error) {
         console.error('Error fetching breed image:', error);
+        // Use placeholder image on error
+        setImageUrl('/placeholder-dog.jpg');
       }
       setIsLoading(false);
     };
