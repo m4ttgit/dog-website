@@ -72,8 +72,20 @@ export default function BreedCard({ breed }) {
       try {
         // First try to load from our local mapping
         const breedMapping = await fetch('/breed-images.json').then(res => res.json());
+        
+        // Try exact match first
         if (breedMapping[displayName]) {
           setImageUrl(breedMapping[displayName]);
+          setIsLoading(false);
+          return;
+        }
+        
+        // Try case-insensitive match
+        const exactMatch = Object.keys(breedMapping).find(key => 
+          key.toLowerCase() === displayName.toLowerCase()
+        );
+        if (exactMatch) {
+          setImageUrl(breedMapping[exactMatch]);
           setIsLoading(false);
           return;
         }
