@@ -1,3 +1,4 @@
+'use client';
 import { getBreedBySlug } from "@/app/api/breeds";
 import Image from "next/image";
 import { ShareButtons } from "@/app/components/ShareButtons";
