@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
+
 import { FaStar, FaMapMarkerAlt, FaPaw, FaPhone, FaGlobe, FaDollarSign, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const CafeList = ({ cafes }) => {
@@ -42,22 +42,23 @@ const CafeList = ({ cafes }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentCafes.map((cafe, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-            {cafe.image && (
-              <div className="relative h-48 w-full">
-                <Image
-                  src={cafe.image}
-                  alt={cafe.name}
-                  fill
-                  className="object-cover"
-                />
+        {currentCafes.map((cafe, index) => {
+          const colors = ['bg-blue-500', 'bg-green-500', 'bg-purple-500', 'bg-orange-500', 'bg-red-500'];
+          const bgColor = colors[index % colors.length];
+          
+          return (
+            <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+            <div className={`relative h-48 w-full ${bgColor} flex items-center justify-center`}>
+              <div className="text-center text-white p-4">
+                <div className="text-4xl mb-2">☕</div>
+                <h3 className="text-lg font-bold">{cafe.name}</h3>
+                <p className="text-sm opacity-90">Dog-Friendly Cafe</p>
               </div>
-            )}
+            </div>
             <div className="p-6">
               <div className="flex items-center gap-2 mb-2">
                 <FaPaw className="text-blue-500" />
-                <h3 className="text-xl font-semibold truncate">{cafe.name}</h3>
+                <span className="text-sm text-gray-600">Featured Cafe</span>
               </div>
               
               <div className="flex items-center gap-2 mb-2">
@@ -114,8 +115,9 @@ const CafeList = ({ cafes }) => {
                 </a>
               </div>
             </div>
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
 
       {filteredCafes.length === 0 && (

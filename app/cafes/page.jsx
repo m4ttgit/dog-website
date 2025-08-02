@@ -13,14 +13,12 @@ export default function CafesPage() {
       const csvText = await response.text();
       const result = Papa.parse(csvText, { header: true });
       
-      // Transform data to match CafeList component requirements
       const transformedCafes = result.data.map(cafe => ({
         name: cafe.business_name,
         address: cafe.address,
         rating: cafe.rating,
         likes: cafe.reviews,
         type: 'Dog-Friendly Cafe',
-        image: cafe.serpapi_thumbnail || '/images/default-cafe.jpg',
         mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
           `${cafe.business_name} ${cafe.address}`
         )}`,
