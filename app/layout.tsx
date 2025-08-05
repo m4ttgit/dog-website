@@ -18,6 +18,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ThatDogPage - Discover the World of Dogs",
   description: "Explore everything you need to know about man's best friend. From breed information to care tips, discover the wonderful world of dogs.",
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
