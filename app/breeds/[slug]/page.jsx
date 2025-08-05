@@ -2,16 +2,11 @@
 import { getBreedBySlug } from "@/app/api/breeds";
 import Image from "next/image";
 import { ShareButtons } from "@/app/components/ShareButtons";
+import breedImages from '@/public/breed-images.json';
 
 function BreedPageClient({ breed, slug }) {
-  // Simple image path construction
-  const getImagePath = (breedName) => {
-    // Try common image path patterns
-    const imageName = breedName.replace(/\s+/g, '_');
-    return `/images/breeds/${imageName}.jpg`;
-  };
-  
-  const imageUrl = getImagePath(breed.breed);
+  // Get image path from mapping or fallback to placeholder
+  const imageUrl = breedImages[breed.breed] || '/placeholder-dog.jpg';
 
   return (
     <div className="container mx-auto py-6 px-4">

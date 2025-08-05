@@ -1,11 +1,17 @@
+import Image from 'next/image';
+
 function DogCard({ dog }) {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
       <div className="relative h-48 overflow-hidden">
-        <img
+        <Image
           src={dog.image}
           alt={dog.breed}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          onError={(e) => {
+            e.target.src = '/placeholder-dog.jpg';
+          }}
         />
       </div>
       <div className="p-4">

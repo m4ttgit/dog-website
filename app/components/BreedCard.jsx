@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import ShareButtons from '@/app/components/ShareButtons';
+import breedImages from '@/public/breed-images.json';
 
 function formatRange(min, max, unit) {
   if (!min && !max) return 'N/A';
@@ -64,13 +65,8 @@ export default function BreedCard({ breed }) {
   // Ensure we have a display name
   const displayName = breed.breed || breed.name || 'Unknown Breed';
   
-  // Simple image path construction
-  const getImagePath = (breedName) => {
-    const imageName = breedName.replace(/\s+/g, '_');
-    return `/images/breeds/${imageName}.jpg`;
-  };
-  
-  const imageUrl = getImagePath(displayName);
+  // Get image path from mapping or fallback to placeholder
+  const imageUrl = breedImages[displayName] || '/placeholder-dog.jpg';
 
   // Calculate trait values
   const energyValue = parseFloat(breed.energy_level_value) || 0;

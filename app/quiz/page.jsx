@@ -6,6 +6,9 @@ export default function QuizPage() {
   const [breeds, setBreeds] = useState([]);
   const [correctBreed, setCorrectBreed] = useState('');
   const [streak, setStreak] = useState(0);
+  const [bestStreak, setBestStreak] = useState(0);
+  const [revealedAnswer, setRevealedAnswer] = useState(null);
+  const [userAnswer, setUserAnswer] = useState(null);
 
   useEffect(() => {
     fetchDogImageAndBreeds();
@@ -44,6 +47,9 @@ export default function QuizPage() {
     } catch (error) {
       console.error('Failed to fetch quiz data:', error);
     }
+    // Reset revealed answer and user answer for the new question
+    setRevealedAnswer(null);
+    setUserAnswer(null);
   };
 
   const getRandomBreeds = (breedsList, count) => {
@@ -52,12 +58,22 @@ export default function QuizPage() {
   };
 
   const handleAnswer = (breed) => {
+    setUserAnswer(breed);
     if (breed === correctBreed) {
-      setStreak(streak + 1);
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      if (newStreak > bestStreak) {
+        setBestStreak(newStreak);
+      }
+      setRevealedAnswer(null);
     } else {
       setStreak(0);
+      setRevealedAnswer(correctBreed);
     }
-    fetchDogImageAndBreeds();
+    // Delay fetching next question to let user see feedback
+    setTimeout(() => {
+      fetchDogImageAndBreeds();
+    }, 1500);
   };
 
   return (
@@ -91,7 +107,16 @@ export default function QuizPage() {
             <button
               key={index}
               onClick={() => handleAnswer(breed)}
-              className="bg-white border-2 border-primary hover:bg-primary hover:text-white text-primary font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+              disabled={revealedAnswer !== null}
+              className={`bg-white border-2 font-semibold py-3 px-6 rounded-lg transition-colors duration-200 ${
+                revealedAnswer !== null
+                  ? breed === correctBreed
+                    ? 'ring-2 ring-green-400 border-green-300 bg-green-50 text-green-700'
+                    : breed === userAnswer
+                    ? 'border-red-200 bg-red-50 text-red-700 opacity-60'
+                    : 'border-gray-200 text-gray-500'
+                  : 'border-primary hover:bg-primary hover:text-white text-primary'
+              }`}
             >
               {breed.replace('-', ' ').split(' ').map(word => 
                 word.charAt(0).toUpperCase() + word.slice(1)
@@ -100,9 +125,23 @@ export default function QuizPage() {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
+        {revealedAnswer && (
+          <div
+            className="mt-6 rounded-lg border border-green-200 bg-green-50 p-4 text-center text-green-700"
+            aria-live="polite"
+          >
+            <p className="font-medium">
+              Correct answer: <span className="font-bold">{revealedAnswer.replace('-', ' ').split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</span>
+            </p>
+          </div>
+        )}
+
+        <div className="mt-8 text-center space-y-2">
           <p className="text-lg">
             Current Streak: <span className="font-bold text-primary">{streak}</span>
+          </p>
+          <p className="text-lg">
+            Best Streak: <span className="font-bold text-accent">{bestStreak}</span>
           </p>
         </div>
       </div>

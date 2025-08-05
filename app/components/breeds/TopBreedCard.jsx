@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import breedImages from '@/public/breed-images.json';
 
 const formatNumber = (value) => {
   return value ? value.toFixed(2) : null;
@@ -9,20 +10,7 @@ export default function TopBreedCard({ breed }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const getBreedPhotoUrl = (breedName) => {
-    const breedPhotos = {
-      'Labrador Retriever': '/images/breeds/ryan-phillips-PIDjFNVOxY0-unsplash_labrador_retriever.jpg',
-      'French Bulldog': '/images/breeds/karsten-winegeart-oU6KZTXhuvk-unsplash_french_bulldog.jpg',
-      'Golden Retriever': '/images/breeds/justin-aikin-KFJuCzJiQYU-unsplash_golden_retriver.jpg',
-      'German Shepherd Dog': '/images/breeds/sofia-guaico-xqqjZznrar0-unsplash_german_shepard.jpg',
-      'Poodle (Standard)': '/images/breeds/fredrik-ohlander-tGBRQw52Thw-unsplash_poodle.jpg',
-      'Poodle (Toy)': '/images/breeds/alison-pang-c2XO2lTnE7A-unsplash_poodle_toy.jpg',
-      'Poodle (Miniature)': '/images/breeds/jarad-lee-sxn9LiahfMM-unsplash_poodle_miniature.jpg',
-      'Bulldog': '/images/breeds/kabo-7vJRRntoQwg-unsplash_bulldog.jpg',
-      'Rottweiler': '/images/breeds/kevin-seibel-s3fnidf3VVs-unsplash_rottweiler.jpg',
-      'Beagle': '/images/breeds/evy-prentice--xFcBvbwLAU-unsplash_beagle.jpg'
-    };
-    
-    return breedPhotos[breedName] || '/placeholder-dog.jpg';
+    return breedImages[breedName] || '/placeholder-dog.jpg';
   };
 
   const handleCloseModal = () => {
