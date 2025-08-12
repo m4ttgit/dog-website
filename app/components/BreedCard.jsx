@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import ShareButtons from '@/app/components/ShareButtons';
+import ImageAttribution from '@/app/components/ImageAttribution';
 import breedImages from '@/public/breed-images.json';
 
 function formatRange(min, max, unit) {
@@ -68,9 +69,9 @@ export default function BreedCard({ breed }) {
   // Get image path from mapping or fallback to placeholder
   const imageUrl = breedImages[displayName] || '/placeholder-dog.jpg';
 
-  // Calculate trait values
-  const energyValue = parseFloat(breed.energy_level_value) || 0;
-  const trainabilityValue = parseFloat(breed.trainability_value) || 0;
+  // Calculate trait values with fallback to 0.5 if missing or zero
+  const energyValue = parseFloat(breed.energy_level_value) || 0.5;
+  const trainabilityValue = parseFloat(breed.trainability_value) || 0.5;
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -115,7 +116,7 @@ export default function BreedCard({ breed }) {
   );
 
   const BreedImage = ({ className = "h-48" }) => (
-    <div className={`w-full ${className} relative bg-gray-100 rounded-t-xl overflow-hidden`}>
+    <div className={`w-full ${className} bg-gray-100 rounded-t-xl overflow-hidden`}>
       <img
         src={imageUrl}
         alt={displayName}
@@ -158,6 +159,8 @@ export default function BreedCard({ breed }) {
               <p className="line-clamp-3">{breed.description}</p>
             </div>
           )}
+          
+          <ImageAttribution breedName={displayName} />
         </div>
       </div>
 

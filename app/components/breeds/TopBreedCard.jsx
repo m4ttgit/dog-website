@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import ImageAttribution from '@/app/components/ImageAttribution';
 import breedImages from '@/public/breed-images.json';
 
 const formatNumber = (value) => {
@@ -31,7 +32,7 @@ export default function TopBreedCard({ breed }) {
           <img
             src={getBreedPhotoUrl(breed.name)}
             alt={breed.name}
-            className="w-full h-48 object-cover"
+            className="w-full h-48 object-contain bg-gray-100"
           />
         </div>
         <div className="p-4">
@@ -39,6 +40,7 @@ export default function TopBreedCard({ breed }) {
           <p className="text-sm text-gray-600 line-clamp-3">
             {breed.temperament || `The ${breed.name} is a wonderful companion.`}
           </p>
+          <ImageAttribution breedName={breed.name} />
         </div>
       </div>
 
@@ -66,11 +68,11 @@ export default function TopBreedCard({ breed }) {
             {/* Modal content */}
             <div className="divide-y divide-gray-200">
               {/* Image section */}
-              <div className="relative h-64 sm:h-80">
+              <div className="h-64 sm:h-80">
                 <img
                   src={getBreedPhotoUrl(breed.name)}
                   alt={breed.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain bg-gray-100"
                 />
               </div>
 

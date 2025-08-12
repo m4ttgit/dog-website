@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import ImageAttribution from '@/app/components/ImageAttribution';
 
 function DogCard({ dog }) {
   return (
@@ -13,6 +14,7 @@ function DogCard({ dog }) {
             e.target.src = '/placeholder-dog.jpg';
           }}
         />
+        <ImageAttribution breedName={dog.breed} />
       </div>
       <div className="p-4">
         <h2 className="text-xl font-semibold text-primary mb-2">{dog.breed}</h2>

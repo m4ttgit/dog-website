@@ -2,6 +2,7 @@
 import { getBreedBySlug } from "@/app/api/breeds";
 import Image from "next/image";
 import { ShareButtons } from "@/app/components/ShareButtons";
+import ImageAttribution from "@/app/components/ImageAttribution";
 import breedImages from '@/public/breed-images.json';
 
 function BreedPageClient({ breed, slug }) {
@@ -28,6 +29,7 @@ function BreedPageClient({ breed, slug }) {
                 e.target.src = '/placeholder-dog.jpg';
               }}
             />
+            <ImageAttribution breedName={breed.breed} />
           </div>
         </div>
         
@@ -44,8 +46,8 @@ function BreedPageClient({ breed, slug }) {
               <p><strong>Height:</strong> {breed.min_height}-{breed.max_height} cm</p>
               <p><strong>Weight:</strong> {breed.min_weight}-{breed.max_weight} kg</p>
               <p><strong>Life Expectancy:</strong> {breed.min_expectancy}-{breed.max_expectancy} years</p>
-              <p><strong>Energy Level:</strong> {Math.round(breed.energy_level_value * 10)}/10</p>
-              <p><strong>Trainability:</strong> {Math.round(breed.trainability_value * 10)}/10</p>
+              <p><strong>Energy Level:</strong> {Math.round((breed.energy_level_value || 0.5) * 10)}/10</p>
+              <p><strong>Trainability:</strong> {Math.round((breed.trainability_value || 0.5) * 10)}/10</p>
             </div>
           </div>
         </div>

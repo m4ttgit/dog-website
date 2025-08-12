@@ -10,10 +10,7 @@ const validateBreedData = (breed) => {
     'min_weight',
     'max_weight',
     'min_expectancy',
-    'max_expectancy',
-    'grooming_frequency_value',
-    'energy_level_value',
-    'trainability_value'
+    'max_expectancy'
   ];
 
   const missingFields = requiredFields.filter(field => {
@@ -24,6 +21,17 @@ const validateBreedData = (breed) => {
   if (missingFields.length > 0) {
     console.warn(`Breed "${breed.breed}" is missing fields:`, missingFields);
     return false;
+  }
+
+  // Check that characteristic values are present (they should have defaults now)
+  const characteristicFields = ['grooming_frequency_value', 'energy_level_value', 'trainability_value'];
+  const missingCharacteristics = characteristicFields.filter(field => {
+    const value = breed[field];
+    return value === null || value === undefined || value === 0;
+  });
+
+  if (missingCharacteristics.length > 0) {
+    console.warn(`Breed "${breed.breed}" has missing characteristics (using defaults):`, missingCharacteristics);
   }
 
   return true;
@@ -39,11 +47,11 @@ const processBreedData = (breed) => {
     min_expectancy: 0,
     max_expectancy: 0,
     popularity: 999,
-    grooming_frequency_value: 0,
-    shedding_value: 0,
-    energy_level_value: 0,
-    trainability_value: 0,
-    demeanor_value: 0
+    grooming_frequency_value: 0.5,
+    shedding_value: 0.5,
+    energy_level_value: 0.5,
+    trainability_value: 0.5,
+    demeanor_value: 0.5
   };
 
   const processed = { ...breed };
@@ -55,9 +63,18 @@ const processBreedData = (breed) => {
       // Remove any non-numeric characters except decimal points
       value = value.replace(/[^\d.-]/g, '');
     }
-    processed[field] = field === 'popularity' 
-      ? parseInt(value) || numericFields[field]
-      : parseFloat(value) || numericFields[field];
+    
+    if (field === 'popularity') {
+      processed[field] = parseInt(value) || numericFields[field];
+    } else {
+      const parsedValue = parseFloat(value);
+      // For characteristic values, use default if missing, null, undefined, or 0
+      if (['grooming_frequency_value', 'shedding_value', 'energy_level_value', 'trainability_value', 'demeanor_value'].includes(field)) {
+        processed[field] = (parsedValue && parsedValue > 0) ? parsedValue : numericFields[field];
+      } else {
+        processed[field] = parsedValue || numericFields[field];
+      }
+    }
   });
 
   // Ensure description exists
