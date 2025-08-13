@@ -5,8 +5,8 @@ import { useState } from 'react';
 export default function BreedSelector({ breeds, selectedBreeds, onAddBreed, onRemoveBreed, maxSelected }) {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredBreeds = breeds.filter(breed => 
-    breed.breed.toLowerCase().includes(searchTerm.toLowerCase()) &&
+  const filteredBreeds = (Array.isArray(breeds) ? breeds : []).filter(breed => 
+    breed?.breed?.toLowerCase().includes(searchTerm.toLowerCase()) &&
     !selectedBreeds.find(selected => selected.breed === breed.breed)
   );
 

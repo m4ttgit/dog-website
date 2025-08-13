@@ -13,10 +13,14 @@ export default function BreedComparePage() {
     async function fetchBreeds() {
       try {
         const response = await fetch('/api/breeds');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await response.json();
-        setBreeds(data);
+        setBreeds(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Error fetching breeds:', error);
+        setBreeds([]);
       } finally {
         setLoading(false);
       }
