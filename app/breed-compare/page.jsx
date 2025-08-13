@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/app/lib/supabase';
 import { fallbackBreeds } from '@/app/lib/fallback-breeds';
+import breedImages from '@/public/breed-images.json';
 
 export default function BreedComparePage() {
   const [breeds, setBreeds] = useState([]);
@@ -196,9 +197,12 @@ export default function BreedComparePage() {
                     {selectedBreeds.map(breed => (
                       <th key={breed.breed} className="text-left py-3 px-4 font-semibold min-w-32">
                         <div className="text-center">
-                          <div className="w-24 h-24 bg-gray-200 rounded-lg mx-auto mb-2 flex items-center justify-center">
-                            <span className="text-xs text-gray-500">No Image</span>
-                          </div>
+                          <img
+                            src={breedImages[breed.breed] || '/placeholder-dog.jpg'}
+                            alt={breed.breed}
+                            className="w-24 h-24 object-cover rounded-lg mx-auto mb-2"
+                            onError={(e) => { e.target.src = '/placeholder-dog.jpg'; }}
+                          />
                           <div className="flex items-center justify-between">
                             <span className="text-sm">{breed.breed}</span>
                             <button
