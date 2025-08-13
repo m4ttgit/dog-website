@@ -109,6 +109,16 @@ export default function BreedsPageClient({ initialBreeds }) {
       <div className="mt-12">
         <HeroSection onStartQuiz={() => setShowQuiz(true)} />
         
+        {/* Compare Breeds CTA */}
+        <div className="text-center mb-8">
+          <a 
+            href="/breed-compare" 
+            className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Compare Breeds Side by Side
+          </a>
+        </div>
+        
         {showQuiz && <BreedQuiz onResults={handleQuizResults} />}
 
         <div id="breed-results" className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12">

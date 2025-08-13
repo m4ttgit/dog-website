@@ -131,10 +131,10 @@ export default function TopBreedCard({ breed }) {
                       <h3 className="font-semibold mb-1">Life Expectancy</h3>
                       <p className="text-gray-600">
                         {breed.min_expectancy && breed.max_expectancy
-                          ? `${breed.min_expectancy} - ${breed.max_expectancy} years`
+                          ? `${Math.round(breed.min_expectancy)}-${Math.round(breed.max_expectancy)} years`
                           : breed.min_expectancy
-                          ? `${breed.min_expectancy} years`
-                          : `${breed.max_expectancy} years`}
+                          ? `${Math.round(breed.min_expectancy)} years`
+                          : `${Math.round(breed.max_expectancy)} years`}
                       </p>
                     </div>
                   )}

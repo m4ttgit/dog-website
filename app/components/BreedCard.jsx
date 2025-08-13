@@ -67,7 +67,12 @@ export default function BreedCard({ breed }) {
   const displayName = breed.breed || breed.name || 'Unknown Breed';
   
   // Get image path from mapping or fallback to placeholder
-  const imageUrl = breedImages[displayName] || '/placeholder-dog.jpg';
+  let imageUrl = breedImages[displayName] || '/placeholder-dog.jpg';
+  
+  // Special case for Cirneco dell'Etna
+  if (displayName.includes('Cirneco') || displayName.includes('dell')) {
+    imageUrl = '/images/breeds/Cirneco_dell_Etna.jpg';
+  }
 
   // Calculate trait values with fallback to 0.5 if missing or zero
   const energyValue = parseFloat(breed.energy_level_value) || 0.5;
