@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/app/lib/supabase';
 import { fallbackBreeds } from '@/app/lib/fallback-breeds';
 import breedImages from '@/public/breed-images.json';
+import ShareButtons from '@/app/components/ShareButtons';
 
 export default function BreedComparePage() {
   const [breeds, setBreeds] = useState([]);
@@ -24,8 +25,7 @@ export default function BreedComparePage() {
       // Try direct Supabase connection first
       const { data, error: supabaseError } = await supabase
         .from('dogbreed')
-        .select('*')
-        .limit(100);
+        .select('*');
 
       if (supabaseError) {
         console.warn('Supabase error, using fallback data:', supabaseError);
@@ -272,6 +272,19 @@ export default function BreedComparePage() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+          
+          {/* Share Section */}
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <div className="text-center">
+              <h3 className="text-lg font-semibold mb-3">Share this comparison</h3>
+              <ShareButtons 
+                path="/breed-compare"
+                title={`Dog Breed Comparison: ${selectedBreeds.map(b => b.breed).join(' vs ')}`}
+                text={`Compare ${selectedBreeds.map(b => b.breed).join(' and ')} dog breeds side by side!`}
+                className="justify-center"
+              />
             </div>
           </div>
         </div>

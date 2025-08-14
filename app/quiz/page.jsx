@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import ShareButtons from '@/app/components/ShareButtons';
 
 export default function QuizPage() {
   const [dogImage, setDogImage] = useState('');
@@ -143,6 +144,25 @@ export default function QuizPage() {
           <p className="text-lg">
             Best Streak: <span className="font-bold text-accent">{bestStreak}</span>
           </p>
+        </div>
+      </div>
+
+      {/* Share Section */}
+      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 mb-12">
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">Share the Quiz</h3>
+          <p className="text-gray-600 mb-6">
+            Challenge your friends! Current streak: <span className="font-bold text-primary">{streak}</span>
+            {bestStreak > 0 && (
+              <span>, Best streak: <span className="font-bold text-accent">{bestStreak}</span></span>
+            )}
+          </p>
+          <ShareButtons 
+            path="/quiz"
+            title="Dog Breed Quiz Challenge"
+            text={`I'm testing my dog breed knowledge! ${bestStreak > 0 ? `My best streak is ${bestStreak}!` : 'Can you beat my score?'} Try the quiz:`}
+            className="justify-center"
+          />
         </div>
       </div>
     </div>
